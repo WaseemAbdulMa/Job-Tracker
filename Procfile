@@ -1,1 +1,1 @@
-web: python manage.py && gunicorn Job_Tracker.wsgi
+web: python manage.py makemigrations && python manage.py && gunicorn Job_Tracker.wsgi
