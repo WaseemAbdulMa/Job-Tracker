@@ -1,0 +1,40 @@
+{% extends "applications/base.html" %}
+
+{% block content %}
+<div class="main-container">
+    <div class="container" style="text-align:left;">
+        <div class="form-appblock">
+            <h1 style="font-weight:bold;">Interview <span class="sp-color">Questions</span></h1>
+            <hr>
+
+            {% regroup questions by company_name as company_groups %}
+            <div class="panel-group" id="accordion">
+                {% for group in company_groups %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
+                                    <strong>{{ group.grouper }}</strong>
+                                </a>
+                            </h4>
+                        </div>
+
+                        <div id="collapse{{ forloop.counter }}" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                {% for question in group.list %}
+                                    <p>{{ question.question_text }}</p>
+                                    <!-- Optional: Add Edit/Delete buttons here -->
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No questions found.</p>
+                {% endfor %}
+            </div>
+
+            <a href="{% url 'add_questions' %}" class="btn btn-primary">Add New Questions</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'applications/base.html' %}
+{% load static %}
+
+{% block title %}Application Details{% endblock %}
+
+{% block content %}
+<div class="main-container">
+<div class="container" style="text-align:left;">
+    <div class="form-appblock">
+    <h1 style="font-weight:bold;">{{ application.job_title }} at <span class="sp-color">{{ application.company_name }}</span></h1>
+    <hr>
+
+
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#job-details">Job Details</a></li>
+        <li><a data-toggle="tab" href="#job-description">Job Description</a></li>
+        <li><a data-toggle="tab" href="#additional-details">Additional Details</a></li>
+      </ul>
+    
+      <div class="tab-content">
+        <div id="job-details" class="tab-pane fade in active">
+            <h3>Job Details</h3>
+          <table class="table table-striped">
+            <tr>
+                <th>Date Applied</th>
+                <td>{{ application.date_applied }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>
+                    <span class="status-label status-{{ application.status|lower }}">{{ application.status }}</span>
+                </td>
+            </tr>
+            <tr>
+                <th>Applied Platform</th>
+                <td>{{ application.applied_platform }}</td>
+            </tr>
+            
+        </table>
+        </div>
+        <div id="job-description" class="tab-pane fade">
+            <h3>Job Description</h3>
+            <p>{{ application.job_description|linebreaks }}</p>
+        </div>
+        <div id="additional-details" class="tab-pane fade">
+          <h3>Additional Details</h3>
+          <table class="table table-striped">
+              <tr>
+                  <th>Company Email</th>
+                  <td>{{ application.company_email }}</td>
+              </tr>
+              
+              <tr>
+                  <th>Follow-up Date</th>
+                  <td>{{ application.follow_up_date }}</td>
+              </tr>
+              <tr>
+                  <th>Notes</th>
+                  <td>{{ application.additional_notes|linebreaks }}</td>
+              </tr>
+          </table>
+        </div>
+        
+      </div>
+
+
+
+    <!-- Action buttons for edit and back -->
+    <div class="action-buttons mt-4">
+        <form action="{% url 'job_application_edit' application.pk %}" method="get" style="display: inline;">
+            <button type="submit" class="btn btn-edit btn-primary">Edit</button>
+        </form>
+        <form action="{% url 'job_application_list' %}" method="get" style="display: inline;">
+            <button type="submit" class="btn btn-back btn-secondary">Back to List</button>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+
+{% endblock %}

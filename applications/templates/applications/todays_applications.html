@@ -1,0 +1,104 @@
+{% extends 'applications/base.html' %}
+
+{% block title %}Today's Job Applications{% endblock %}
+
+{% block content %}
+<div class="main-container">
+<div class="container">
+    <div class="form-appblock">
+        <h1 style="font-weight:bold">Today’s <span class="sp-color">Job Applications</span></h1>
+        <hr>
+
+        <!-- Search Bar -->
+        <div class="search-block">
+            <input type="text" id="search" placeholder="Search Applications..." class="search-bar" />
+        </div>  
+
+        <!-- Table with Job Applications -->
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Job Title</th>
+                    <th>Company</th>
+                    <th>Date Applied</th>
+                    <th>Status</th>
+                    <th>Interview Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="application-list">
+                {% for application in page_obj %}
+                <tr>
+                    <td>{{ forloop.counter|add:page_obj.start_index|add:"-1" }}</td>
+                    <td>{{ application.job_title }}</td>
+                    <td>{{ application.company_name }}</td>
+                    <td>{{ application.date_applied }}</td>
+                    <td>
+                        <span class="status-label status-{{ application.status|lower }}">
+                            {{ application.status }}
+                        </span>
+                    </td>
+                    <td>{{ application.interview_date|default:"Not scheduled" }}</td>
+                    <td>
+                        <a href="{% url 'job_application_detail' application.pk %}" class="btn btn-primary">View</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">No job applications found for today.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination Controls -->
+        <ul class="pagination">
+            <!-- Previous Page Link -->
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Previous</a>
+                </li>
+            {% endif %}
+        
+            <!-- Page Numbers -->
+            {% for num in page_obj.paginator.page_range %}
+                <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+            {% endfor %}
+        
+            <!-- Next Page Link -->
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+
+        <!-- Search Functionality Script -->
+        <script>
+            document.getElementById('search').addEventListener('keyup', function() {
+                var input = this.value.toLowerCase();
+                var items = document.querySelectorAll('#application-list tr');
+                items.forEach(function(item) {
+                    if (item.textContent.toLowerCase().includes(input)) {
+                        item.style.display = ''; // Show the item
+                    } else {
+                        item.style.display = 'none'; // Hide the item
+                    }
+                });
+            });
+        </script>
+    </div>
+</div>
+</div>
+{% endblock %}

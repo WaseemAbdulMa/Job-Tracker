@@ -1,0 +1,100 @@
+{% extends 'applications/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+
+<!-- Main Content Container -->
+<div class="main-container">
+<div class="container" id="content" style="text-align:left;">
+<div class="form-appblock">
+    <h2>Dashboard <span class="sp-color">Overview</span></h2>
+	<hr>
+    <!-- Card Container -->
+     <div class="row">
+        <div class="col-md-4">
+            <div class="card-container">
+                <div class="card">
+                    <a href="{% url 'job_application_list' %}" class="card">
+                        <div class="card-header">Total Applications</div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ total_applications }}</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+			<br>
+			<br>
+        </div>
+        <div class="col-md-4">
+            <div class="card-container">
+                <div class="card">
+                    <a href="{% url 'rejected_companies' %}" class="card">
+                        <div class="card-header">Rejected Applications</div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ total_rejected }}</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+			<br>
+			<br>
+        </div>
+        <div class="col-md-4">
+			<div class="card-container">
+                <div class="card">
+                    <a href="{% url 'shortlisted_companies' %}" class="card">
+                        <div class="card-header">Shortlisted Companies</div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ shortlisted_count }}</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+			<br>
+			<br>
+		</div>
+		<div class="col-md-4">
+			<div class="card-container">
+                <div class="card">
+                    <a href="{% url 'upcoming_interviews' %}" class="card">
+						<div class="card-header">Upcoming Interviews</div>
+						<div class="card-body">
+							<h5 class="card-title">{{ total_upcoming_interviews }}</h5>
+						</div>
+					</a>
+                </div>
+            </div>
+			<br>
+			<br>
+		</div>
+		<div class="col-md-4">
+			<div class="card-container">
+                <div class="card">
+                    <a href="{% url 'todays_applications' %}" class="card">
+                        <div class="card-header">Today Applied Applications</div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ total_applications_today }}</h5>
+                        </div>
+                    </a>
+				</div>
+            </div>
+			<br>
+			<br>
+		</div>
+
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('content');
+        sidebar.classList.toggle('active');
+        content.classList.toggle('expanded');
+    }
+</script>
+{% endblock %}

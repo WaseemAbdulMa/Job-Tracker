@@ -1,0 +1,35 @@
+{% extends 'applications/base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if form.instance.pk %}Edit{% else %}Add{% endif %} Job Application
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+	<div class="container">
+		<div class="form-appblock">
+			<h1 style="font-weight:bold;">{% if form.instance.pk %}Edit{% else %}Add{% endif %} <span class="sp-color">Job Application</span></h1>
+			<hr style="border: solid 1px #000;">
+			<div class="row">
+				<div class="col-md-7">
+					<div class="form-image">
+						<img src="{%static 'applications/images/job-6956074_1280.png'%}" style="width:100%"/>
+					</div>
+				</div>
+				<div class="col-md-5" style="text-align:left;">
+					<form method="POST">
+						{% csrf_token %}
+						{{ form.as_p }}
+						<button type="submit" class="btn btn-primary">Save</button>
+						<a href="{% url 'job_application_list' %}" class="btn btn-secondary">Cancel</a>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+    <br>
+    <br>
+    <br>
+{% endblock %}

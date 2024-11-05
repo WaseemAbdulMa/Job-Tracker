@@ -1,0 +1,70 @@
+{% extends "applications/base.html" %}
+{% load static %}
+{% block content %}
+<div class="main-container">
+<div class="container">
+		<div class="form-appblock">
+		<h1 style="font-weight:bold">Add <span class="sp-color">Interview Questions</span></h1>
+		<hr>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-image">
+						<img src="{%static 'applications/images/job-6956074_1280.png'%}" style="width:100%"/>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<form method="post">
+			{% csrf_token %}
+			<div class="form-fileds">
+				<label for="company_name" sty>Company Name:</label>
+				<input type="text" name="company_name" id="company_name" required>
+				
+			</div>
+			<div class="form-fileds" id="question-container">
+				<label for="questions" sty>Interview Question:</label>
+				<textarea name="question_text" rows="3" id="questions" placeholder="Enter your question here..." required></textarea>
+				
+				
+			</div>
+			<div class="btn-group">
+				<div class="btn-main">
+					<button type="button" onclick="addQuestionField()" class="btn btn-primary">Add Question</button> 
+				</div>
+				<div class="btn-main">
+					<button type="submit" class="btn btn-success">Save Questions</button>
+				</div>
+			</div>
+			
+		</form>
+			</div>
+		</div>
+		
+		
+	</div>
+</div>
+</div>
+    <script>
+        function addQuestionField() {
+            const questionDiv = document.createElement('div');
+
+            const input = document.createElement('textarea');
+            input.name = 'question_text';
+            input.rows = 3;
+            input.placeholder = 'Enter your question here...';
+            input.required = true;
+
+            questionDiv.appendChild(input);
+
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.innerText = 'Remove';
+			removeButton.className = 'btn btn-danger'; 
+            removeButton.onclick = () => {
+                questionDiv.remove();
+            };
+
+            questionDiv.appendChild(removeButton);
+            document.getElementById('question-container').appendChild(questionDiv);
+        }
+    </script>
+{% endblock %}
