@@ -1,0 +1,1 @@
+web: python manage.py && gunicorn Job_Tracker.wsgi
