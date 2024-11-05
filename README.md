@@ -20,7 +20,7 @@ Logout Functionality: Secure logout feature for users.
 ## Installation
 
 ### Prerequisites
-- Python 3.x
+- Python
 - Django
 - MySQL
 
