@@ -86,11 +86,11 @@ WSGI_APPLICATION = 'Job_Tracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': env("DJANGO_NAME"),
-        'USER': env("DJANGO_USER"),
-        'PASSWORD': env("DJANGO_PASSWORD"),
-        'HOST': env("DJANGO_HOST"),
-        'PORT': env("DJANGO_PORT"),
+        'NAME': env("DJANGO_DB_NAME"),
+        'USER': env("DJANGO_DB_USER"),
+        'PASSWORD': env("DJANGO_DB_PASSWORD"),
+        'HOST': env("DJANGO_DB_HOST"),
+        'PORT': env("DJANGO_DDB_PORT"),
 
     }
 }
