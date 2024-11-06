@@ -1,18 +1,17 @@
-# Step 1: Use Python image as base
-FROM python:3.9.13
+# Step 1: Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-# Step 2: Set the working directory inside the container (set it to the project folder where manage.py is located)
-WORKDIR /app/Job_Tracker
+# Step 2: Set the working directory inside the container
+WORKDIR /app
 
-# Step 3: Copy requirements.txt into the container and install dependencies
-COPY requirements.txt .
+# Step 3: Copy the current directory contents into the container at /app
+COPY . /app/
+
+# Step 4: Install any needed packages specified in requirements.txt
+RUN apt-get update && apt-get install -y libmysqlclient-dev
+
+# Step 5: Install the Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Step 4: Copy the entire project into the container
-COPY . .
-
-# Step 5: Set the environment variable for Django (production environment)
-ENV PYTHONUNBUFFERED=1
 
 # Step 6: Run migrations (optional: you may want to run this during deployment)
 RUN python manage.py migrate
@@ -20,5 +19,8 @@ RUN python manage.py migrate
 # Step 7: Expose the port that the app will run on (default Django port 8000)
 EXPOSE 8000
 
-# Step 8: Set the default command to run the application using gunicorn
+# Step 8: Define environment variable
+ENV PYTHONUNBUFFERED 1
+
+# Step 9: Run the application
 CMD ["gunicorn", "Job_Tracker.wsgi:application", "--bind", "0.0.0.0:8000"]
